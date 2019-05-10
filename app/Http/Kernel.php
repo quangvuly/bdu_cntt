@@ -60,8 +60,15 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'mdCheckLogin' => \App\Http\Middleware\mdCheckLogin::class,
+        'mdProcessLogin' => \App\Http\Middleware\mdProcessLogin::class,
+        'mdProcessUser' => \App\Http\Middleware\mdProcessUser::class,
+        'mdProcessUserDelete' => \App\Http\Middleware\mdProcessUserDelete::class,
+        'mdProcessNews' => \App\Http\Middleware\mdProcessNews::class,
+        'mdProcessCate' => \App\Http\Middleware\mdProcessCate::class,
+        'mdProcessContact' => \App\Http\Middleware\mdProcessContact::class,
+        
     ];
-
     /**
      * The priority-sorted list of middleware.
      *

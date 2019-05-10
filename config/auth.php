@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        // 'cnttuser' => [
+        //     'driver' => 'session',
+        //     'provider' => 'cnttuser',
+        // ],
     ],
 
     /*
@@ -68,13 +73,14 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Model\UsersModel::class,
         ],
 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
     ],
 
     /*
