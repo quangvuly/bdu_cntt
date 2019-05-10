@@ -32,7 +32,7 @@
 
 </head>
 <body>
-    @include('cntt_client\navigation_bar\navigation')
+    @include('cntt_client.navigation_bar.navigation')
     
     <!--================Banner Area =================-->
     <section class="banner_area">
