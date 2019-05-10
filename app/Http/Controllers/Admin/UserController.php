@@ -128,7 +128,7 @@ class UserController extends Controller
     {
         $user_id = Auth::id();
         $user_permission = Auth::user()->cnttUserLevel;
-
+        
         $user = new UsersModel;
         
         if ($id == 1 || ($user_id != 1 && $user_permission == 1 )) {

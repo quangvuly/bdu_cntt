@@ -41,7 +41,26 @@
                         </div>
                         <div class="form-group">
                             <label for="Author">Tác giả</label>
-                            <input type="text" class="form-control" name="txtAuthor" disabled="disabled" value="{{ $newsEdit['user']['cnttUserFirstName'].' '.$newsEdit['user']['cnttUserLastName'] }}">
+                            {{-- <input type="text" class="form-control" name="txtAuthor" disabled="disabled" value="{{ $newsEdit['user']['cnttUserFirstName'].' '.$newsEdit['user']['cnttUserLastName'] }}">  --}}
+                            
+                            @if (Auth::user()->cnttUserLevel == 2)
+                                <select name="sltAuthor" class="form-control" disabled }}>
+                                    @foreach ($newsUserList as $item)
+                                        <option value="{{ $item['id'] }}" {{ ( $item['id']==$newsEdit['cnttNewsUserID'] ) ? "selected":"" }}>{{ $item['cnttUserFirstName'].' '.$item['cnttUserLastName'] }}</option>
+                                       
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="sltAuthor" value={{Auth::user()->id}} />
+                            @else
+                                <select name="sltAuthor" class="form-control" }}>
+                                
+                                    @foreach ($newsUserList as $item)
+                                        <option value="{{ $item['id'] }}" {{ ( $item['id']==$newsEdit['cnttNewsUserID'] ) ? "selected":"" }}>{{ $item['cnttUserFirstName'].' '.$item['cnttUserLastName'] }}</option>
+                                       
+                                    @endforeach
+                                </select>
+                            @endif
+                            
                         </div>
                         <div class="form-group">
                             <label for="Intro">Tóm tắt nội dung</label>

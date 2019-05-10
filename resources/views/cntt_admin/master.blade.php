@@ -140,8 +140,8 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 
-			@include('cntt_admin/mod_message/error')
-			@include('cntt_admin/mod_message/message') 
+			@include('cntt_admin.mod_message.error')
+			@include('cntt_admin.mod_message.message') 
 			@yield('content')
 			
 		</div>

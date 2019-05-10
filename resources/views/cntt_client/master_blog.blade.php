@@ -54,7 +54,7 @@
     </section>
     <!--================End Static Area =================-->
 
-    @include('cntt_client\footer\footer')
+    @include('cntt_client.footer.footer')
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{asset('public/assets_bdu/js/jquery-3.2.1.min.js')}}"></script>

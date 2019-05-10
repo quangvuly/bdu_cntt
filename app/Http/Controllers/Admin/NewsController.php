@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\NewsModel;
 use App\Model\CategoryModel;
+use App\Model\UsersModel;
+use Auth;
 use App\Http\Requests\cntt_admin\News\CreateNewsRequest;
 use App\Http\Requests\cntt_admin\News\UpdateNewsRequest;
 use Intervention\Image\Facades\Image;
@@ -21,6 +23,7 @@ class NewsController extends Controller
 
     public function index()
     {
+    
         $news = new NewsModel;
         $newsList = $news->listNews();
         return view('cntt_admin/mod_news/list',['newsList' => $newsList]);
@@ -76,13 +79,43 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
+        
         $news = New CategoryModel;
         $newsCate = $news->listCate();
         $news = new NewsModel;
         $newsEdit = $news->editNews($id) ;
 
-        return view('cntt_admin/mod_news/edit',['newsEdit' => $newsEdit,'newsCate'=>$newsCate]);
+        $newUserListAll = UsersModel::where('cnttUserLevel','<>',0)->orderBy('cnttUserLevel','asc')->get()->toArray();
+        $newUserListUser = UsersModel::where(
+            [
+                [
+                    'cnttUserLevel','<>',0
+                ],
+                [
+                    'cnttUserLevel','<>',1
+                ]
+            ])->orderBy('cnttUserFirstName','asc')->get()->toArray();
+
+            $user_id_current = Auth::id();
+            $user_permission_current = Auth::user()->cnttUserLevel;
+    
+            $user_id_news =  NewsModel::find($id)->cnttNewsUserID;
+            $user_permission_news = NewsModel::find($id)->user->cnttUserLevel;
+    
+            if ($user_permission_current == 2 && ($user_id_current != $user_id_news)) {
+                return redirect()->route('admin.news.list')->with('error', 'Không thể cập nhật bài viết của người dùng khác');
+            } else {
+                if ($user_permission_current == 1 && ($user_permission_news == 0 || (($user_id_current != $user_id_news) && $user_permission_news == 1))) {
+                    return redirect()->route('admin.news.list')->with('error', 'Không thể cập nhật bài viết của người dùng khác');
+                } else {
+                    if (Auth::user()->cnttUserLevel == 0) {
+                        return view('cntt_admin/mod_news/edit',['newsEdit' => $newsEdit,'newsCate'=>$newsCate, 'newsUserList' => $newUserListAll]);
+                    } else {
+                        return view('cntt_admin/mod_news/edit',['newsEdit' => $newsEdit,'newsCate'=>$newsCate, 'newsUserList' => $newUserListUser]);
+                    }
+                }
+            }  
     }
 
     /**
@@ -120,10 +153,22 @@ class NewsController extends Controller
     {
 
         $news = new NewsModel;
-        $news->deleteNews($id);
 
+        $user_id_current = Auth::id();
+        $user_permission_current = Auth::user()->cnttUserLevel;
 
+        $user_id_news =  NewsModel::find($id)->cnttNewsUserID;
+        $user_permission_news = NewsModel::find($id)->user->cnttUserLevel;
 
-        return redirect()->route('admin.news.list')->with('success', 'Bài viết đã được xóa');
+        if ($user_permission_current == 2 && ($user_id_current != $user_id_news)) {
+            return redirect()->route('admin.news.list')->with('error', 'Không thể xóa bài viết của ngời dùng khác');
+        } else {
+            if ($user_permission_current == 1 && ($user_permission_news == 0 || (($user_id_current != $user_id_news) && $user_permission_news == 1))) {
+                return redirect()->route('admin.news.list')->with('error', 'Không thể xóa bài viết của admin');
+            } else {
+                $news->deleteNews($id);
+                return redirect()->route('admin.news.list')->with('success', 'Bài viết đã được xóa');
+            }
+        }
     }
 }

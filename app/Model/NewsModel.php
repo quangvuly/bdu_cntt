@@ -76,7 +76,7 @@ class NewsModel extends Model
         $updateNews->cnttNewsDesc = $request->txtIntro;
         $updateNews->cnttNewsDetail = $request->txtContent;
         $updateNews->cnttNewsImage = $img;
-        $updateNews->cnttNewsUserID = $request->user()->id;
+        $updateNews->cnttNewsUserID = $request->sltAuthor;
         $updateNews->cnttNewsStatus =($request->chkStatus) ? 1:2;
         $updateNews->cnttNewsFeature =($request->chkFeature) ? 1:2;
         $updateNews->updated_at = new DateTime();

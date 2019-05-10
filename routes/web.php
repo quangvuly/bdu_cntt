@@ -58,13 +58,13 @@ Route::prefix('admin')->middleware('mdProcessLogin')->namespace('Admin')->group(
     Route::prefix('news')->group(function () {
         Route::get('/','NewsController@index')->name('admin.news.list');
 
-        route::middleware('mdProcessUser')->group(function () {
+        // route::middleware('mdProcessUser')->group(function () {
             Route::get('add','NewsController@create')->name('admin.news.create');
             Route::post('add','NewsController@store')->name('admin.news.store');
             Route::get('edit/{id}','NewsController@edit')->name('admin.news.edit');
             Route::post('edit/{id}','NewsController@update')->name('admin.news.update');
             Route::get('delete/{id}','NewsController@destroy')->name('admin.news.destroy');
-        });
+        // });
     });
 
     Route::prefix('contact')->middleware('mdProcessUser')->group(function () {
