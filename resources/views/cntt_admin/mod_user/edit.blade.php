@@ -51,7 +51,7 @@
 
                                 <div class="checkbox">
                                     <label>
-                                                    <input type="checkbox" {{(Auth::user()->cnttUserLevel == 1)? "disabled":""}} name="checkPermission" value="1"> Đăng ký người dùng với tư cách là Quản trị viên
+                                                    <input type="checkbox" {{(Auth::user()->cnttUserLevel == 1)? "":"disabled"}} name="checkPermission" value="1"> Đăng ký người dùng với tư cách là Quản trị viên
                                                 </label>
                                 </div>
                                 <div class="checkbox">
